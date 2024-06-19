@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cập nhật nhân viên</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2 class="text-center mt-4">Cập nhật nhân viên</h2>
+    <form th:action="@{/nhanvien/capnhat/{id}(id=${nhanVien.maNhanVien})}" th:object="${nhanVien}" method="post">
+        <div class="form-group">
+            <label for="maNhanVien">Mã Nhân Viên</label>
+            <input type="text" class="form-control" id="maNhanVien" th:field="*{maNhanVien}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="tenNhanVien">Tên Nhân Viên</label>
+            <input type="text" class="form-control" id="tenNhanVien" th:field="*{tenNhanVien}" required>
+        </div>
+        <div class="form-group">
+            <label for="phai">Giới tính</label>
+            <select class="form-control" id="phai" th:field="*{phai}">
+                <option value="NU">Nữ</option>
+                <option value="NAM">Nam</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="noiSinh">Nơi Sinh</label>
+            <input type="text" class="form-control" id="noiSinh" th:field="*{noiSinh}" required>
+        </div>
+        <div class="form-group">
+            <label for="phongBan">Phòng Ban</label>
+            <input type="text" class="form-control" id="phongBan" th:field="*{phongBan.maPhong}" required>
+        </div>
+        <div class="form-group">
+            <label for="luong">Lương</label>
+            <input type="number" class="form-control" id="luong" th:field="*{luong}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Cập nhật</button>
+    </form>
+</div>
+</body>
+</html>

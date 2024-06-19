@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý nhân viên</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2 class="text-center mt-4">Thông tin nhân viên</h2>
+    <a href="/nhanvien/them" class="btn btn-primary mb-2">Thêm nhân viên mới</a>
+
+    <!-- Check if nhanVienPage is not null and has content -->
+    <table class="table table-bordered" th:if="${nhanVienPage != null and nhanVienPage.content.size() > 0}">
+        <thead>
+        <tr>
+            <th>Mã Nhân Viên</th>
+            <th>Tên Nhân Viên</th>
+            <th>Giới tính</th>
+            <th>Nơi Sinh</th>
+            <th>Tên Phòng</th>
+            <th>Lương</th>
+            <th>Hành động</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee : ${nhanVienPage.content}">
+            <td th:text="${employee.maNhanVien}"></td>
+            <td th:text="${employee.tenNhanVien}"></td>
+            <td>
+                <img th:src="@{${employee.phai} == 'NU' ? '/images/woman.jpg' : '/images/man.jpg'}" alt="Gender" width="30">
+            </td>
+            <td th:text="${employee.noiSinh}"></td>
+            <td th:text="${employee.phongBan.tenPhong}"></td>
+            <td th:text="${employee.luong}"></td>
+            <td>
+                <a th:href="@{/nhanvien/capnhat/{id}(id=${employee.maNhanVien})}" class="btn btn-info btn-sm">Sửa</a>
+                <a th:href="@{/nhanvien/xoa/{id}(id=${employee.maNhanVien})}" class="btn btn-danger btn-sm">Xóa</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Handle case where nhanVienPage is null or empty -->
+    <div th:if="${nhanVienPage == null or nhanVienPage.content.size() == 0}">
+        <p>Không có nhân viên để hiển thị.</p>
+    </div>
+
+    <!-- Pagination controls -->
+    <div>
+        <a th:if="${nhanVienPage != null and nhanVienPage.hasPrevious()}"
+           th:href="@{/nhanvien(page=${nhanVienPage.number - 1})}" class="btn btn-secondary">Previous</a>
+        <span>Page <span th:text="${nhanVienPage != null ? nhanVienPage.number + 1 : '0'}"></span>
+            of <span th:text="${nhanVienPage != null ? nhanVienPage.totalPages : '0'}"></span></span>
+        <a th:if="${nhanVienPage != null and nhanVienPage.hasNext()}"
+           th:href="@{/nhanvien(page=${nhanVienPage.number + 1})}" class="btn btn-secondary">Next</a>
+    </div>
+</div>
+</body>
+</html>
